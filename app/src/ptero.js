@@ -9,8 +9,18 @@ class Ptero {
         this.animTime = 150
 
         this.frame = 1
-        this.isb = false
         this.active = false
+
+        this.framesPos = [
+            { z: 0.25, y: 0, x: 0 },
+            { z: 0.25, y: 0, x: 0 },
+            { z: 0.25, y: 0, x: 0 },
+            { z: 0.25, y: 0, x: 0 },
+            { z: 0.25, y: 0, x: 0 },
+            { z: 0.25, y: 0, x: 0 },
+            { z: 0.25, y: 0, x: 0 },
+            { z: 0.25, y: 0, x: 0 },
+        ]
     }
     init() {
         // load models + sorting by frames
@@ -48,17 +58,23 @@ class Ptero {
         })
     }
 
-    add(scene) {
+    add(scene, x, y, z) {
         // add frames && animation
         this.frames.forEach((e) => {
             scene.add(e)
             e.visible = false
         })
 
-        this.position(0, 0, 0)
+        this.position(x, y, z)
 
         this.active = true
         this.animation()
+    }
+
+    remove(Scene) {
+        this.active = false
+
+        this.frames.forEach((e) => scene.remove(e))
     }
 
     animation() {
@@ -78,7 +94,7 @@ class Ptero {
     }
 
     position(x = 0, y = 0, z = 0) {
-        const framesPos = [
+        this.framesPos = [
             { z: 0.25, y: 0, x: 0 },
             { z: 0.25, y: 0, x: 0 },
             { z: 0.25, y: 0, x: 0 },
@@ -89,17 +105,31 @@ class Ptero {
             { z: 0.25, y: 0, x: 0 },
         ]
 
-        for (let i = 0; i < 8; i++) {
-            this.frames[i].position.z = framesPos[i].z
-            this.frames[i].position.x = framesPos[i].x
-            this.frames[i].position.y = framesPos[i].y
-        }
-
-        this.frames.forEach((e) => {
-            e.position.x += x
-            e.position.y += y
-            e.position.z += z
+        this.framesPos.forEach((e) => {
+            e.z += z
+            e.x += x
+            e.y += y
         })
+
+        for (let i = 0; i < 8; i++) {
+            this.frames[i].position.z = this.framesPos[i].z
+            this.frames[i].position.y = this.framesPos[i].y
+            this.frames[i].position.x = this.framesPos[i].x
+        }
+    }
+
+    positionadd(x = 0, y = 0, z = 0) {
+        this.framesPos.forEach((e) => {
+            e.z += z
+            e.x += x
+            e.y += y
+        })
+
+        for (let i = 0; i < 8; i++) {
+            this.frames[i].position.z = this.framesPos[i].z
+            this.frames[i].position.x = this.framesPos[i].x
+            this.frames[i].position.y = this.framesPos[i].y
+        }
     }
 
     rotation(x = 0, y = 0, z = 0) {

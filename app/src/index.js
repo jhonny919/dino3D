@@ -67,14 +67,20 @@ camera.position.z = 5
 // import { Dino } from "./dino"
 // const dino = new Dino()
 // dino.init().then(() => dino.add(scene))
-
-import { Ptero } from "./ptero"
-const ptero = new Ptero()
-ptero.init().then(() => ptero.add(scene))
-
-window.camera = camera
 // window.dino = dino
+
+// import { Ptero } from "./ptero"
+// const ptero = new Ptero()
+// ptero.init().then(() => ptero.add(scene))
 // window.ptero = ptero
+
+import { Mediumcactus3 } from "./cactuses/3mediumcactus"
+const asd = new Mediumcactus3()
+asd.init().then(() => asd.add(scene))
+window.asd = asd
+
+window.scene = scene
+window.camera = camera
 
 // ANIM
 const animate = function () {

@@ -13,6 +13,28 @@ class Dino {
         this.frame = 1
         this.isb = false
         this.active = false
+
+        this.framesPos = [
+            { z: 0.15, y: -0.2, x: 0.1 },
+            { z: 0.15, y: -0.2, x: 0 },
+            { z: 0.15, y: -0.2, x: 0 },
+            { z: 0.15, y: -0.2, x: 0 },
+            { z: 0.15, y: -0.2, x: 0 },
+            { z: 0.15, y: -0.2, x: 0 },
+            { z: 0.15, y: -0.2, x: 0 },
+            { z: 0.15, y: -0.2, x: 0 },
+        ]
+
+        this.framesbPos = [
+            { z: 0.15, y: -0.2, x: 0.6 },
+            { z: 0.45, y: -1.9, x: 0.1 },
+            { z: 0.15, y: -0.2, x: -0.2 },
+            { z: 0.15, y: -0.6, x: 0.6 },
+            { z: 0.15, y: -0.4, x: 0.2 },
+            { z: 0.15, y: -2.2, x: 0 },
+            { z: 0.15, y: -2.3, x: 0.1 },
+            { z: 0.15, y: -2, x: -0.1 },
+        ]
     }
     init() {
         // load models + sorting by frames
@@ -76,7 +98,7 @@ class Dino {
         })
     }
 
-    add(scene) {
+    add(scene, x = 0, y = 0, z = 0) {
         // add frames && animation
         this.frames.forEach((e) => {
             scene.add(e)
@@ -87,11 +109,18 @@ class Dino {
             e.visible = false
         })
 
-        this.position(0, 0, 0)
+        this.position(x, y, z)
         this.setControls()
 
         this.active = true
         this.animation()
+    }
+
+    remove(Scene) {
+        this.active = false
+
+        this.frames.forEach((e) => scene.remove(e))
+        this.framesb.forEach((e) => scene.remove(e))
     }
 
     setControls() {
@@ -144,7 +173,7 @@ class Dino {
     }
 
     position(x = 0, y = 0, z = 0) {
-        const framesPos = [
+        this.framesPos = [
             { z: 0.15, y: -0.2, x: 0.1 },
             { z: 0.15, y: -0.2, x: 0 },
             { z: 0.15, y: -0.2, x: 0 },
@@ -155,7 +184,7 @@ class Dino {
             { z: 0.15, y: -0.2, x: 0 },
         ]
 
-        const framesbPos = [
+        this.framesbPos = [
             { z: 0.15, y: -0.2, x: 0.6 },
             { z: 0.45, y: -1.9, x: 0.1 },
             { z: 0.15, y: -0.2, x: -0.2 },
@@ -166,26 +195,49 @@ class Dino {
             { z: 0.15, y: -2, x: -0.1 },
         ]
 
+        this.framesPos.forEach((e) => {
+            e.z += z
+            e.x += x
+            e.y += y
+        })
+        this.framesbPos.forEach((e) => {
+            e.z += z
+            e.x += x
+            e.y += y
+        })
+
         for (let i = 0; i < 8; i++) {
-            this.frames[i].position.z = framesPos[i].z
-            this.frames[i].position.x = framesPos[i].x
-            this.frames[i].position.y = framesPos[i].y
+            this.frames[i].position.z = this.framesPos[i].z
+            this.frames[i].position.y = this.framesPos[i].y
+            this.frames[i].position.x = this.framesPos[i].x
 
-            this.framesb[i].position.z = framesbPos[i].z
-            this.framesb[i].position.x = framesbPos[i].x
-            this.framesb[i].position.y = framesbPos[i].y
+            this.framesb[i].position.z = this.framesbPos[i].z
+            this.framesb[i].position.y = this.framesbPos[i].y
+            this.framesb[i].position.x = this.framesbPos[i].x
         }
+    }
 
-        this.frames.forEach((e) => {
-            e.position.x += x
-            e.position.y += y
-            e.position.z += z
+    positionadd(x = 0, y = 0, z = 0) {
+        this.framesPos.forEach((e) => {
+            e.z += z
+            e.x += x
+            e.y += y
         })
-        this.framesb.forEach((e) => {
-            e.position.x += x
-            e.position.y += y
-            e.position.z += z
+        this.framesbPos.forEach((e) => {
+            e.z += z
+            e.x += x
+            e.y += y
         })
+
+        for (let i = 0; i < 8; i++) {
+            this.frames[i].position.z = this.framesPos[i].z
+            this.frames[i].position.x = this.framesPos[i].x
+            this.frames[i].position.y = this.framesPos[i].y
+
+            this.framesb[i].position.z = this.framesbPos[i].z
+            this.framesb[i].position.x = this.framesbPos[i].x
+            this.framesb[i].position.y = this.framesbPos[i].y
+        }
     }
 
     rotation(x = 0, y = 0, z = 0) {
