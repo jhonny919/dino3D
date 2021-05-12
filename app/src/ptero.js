@@ -21,6 +21,8 @@ class Ptero {
             { z: 0.25, y: 0, x: 0 },
             { z: 0.25, y: 0, x: 0 },
         ]
+
+        this.framePos = { z: 0.25, y: 0, x: 0 }
     }
     init() {
         // load models + sorting by frames
@@ -116,6 +118,8 @@ class Ptero {
             this.frames[i].position.y = this.framesPos[i].y
             this.frames[i].position.x = this.framesPos[i].x
         }
+
+        this.framePos = { x, y, z }
     }
 
     positionadd(x = 0, y = 0, z = 0) {
@@ -130,6 +134,9 @@ class Ptero {
             this.frames[i].position.x = this.framesPos[i].x
             this.frames[i].position.y = this.framesPos[i].y
         }
+        this.framePos.x += x
+        this.framePos.y += y
+        this.framePos.z += z
     }
 
     rotation(x = 0, y = 0, z = 0) {

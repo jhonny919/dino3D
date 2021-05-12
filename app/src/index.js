@@ -1,6 +1,9 @@
 import "./../public/styles/style.scss"
 
 import * as THREE from "three"
+import { linkedList } from "./linkedList"
+import { Loader } from "./loader"
+import { FloorSpaw } from "./floorSpawn"
 
 // add scene
 const scene = new THREE.Scene()
@@ -12,6 +15,20 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
 renderer.setClearColor(0x42e3f5, 1)
+{
+    const color = 0x42e3f5
+    const density = 0.03
+    scene.fog = new THREE.FogExp2(color, density)
+}
+
+//vars
+const list = new linkedList()
+const floorSpawn = new FloorSpaw(Loader, list)
+
+let speed = 0.1
+
+window.scene = scene
+window.camera = camera
 
 //dev tools
 let OrbitControls = require("three-orbit-controls")(THREE)
@@ -64,29 +81,62 @@ camera.position.z = 5
 
 //obj loader
 
-// import { Dino } from "./dino"
-// const dino = new Dino()
-// dino.init().then(() => dino.add(scene))
-// window.dino = dino
+{
+    const dino = Loader.dino()
+    dino.init().then(() => {
+        dino.add(scene)
+        dino.position(-3)
+    })
+    window.dino = dino
+}
 
-// import { Ptero } from "./ptero"
-// const ptero = new Ptero()
-// ptero.init().then(() => ptero.add(scene))
-// window.ptero = ptero
+{
+    const geometry = new THREE.BoxGeometry(150, 1, 4.5)
+    const material = new THREE.MeshBasicMaterial({ color: 0x42daf5, opacity: 0.5, transparent: true })
+    const water = new THREE.Mesh(geometry, material)
+    scene.add(water)
+    water.position.x = 61.5
+    water.position.z = -4.375
+    water.position.y = -0.75
 
-import { Mediumcactus3 } from "./cactuses/3mediumcactus"
-const asd = new Mediumcactus3()
-asd.init().then(() => asd.add(scene))
-window.asd = asd
+    window.water = water
+}
 
-window.scene = scene
-window.camera = camera
+{
+    const ptero = Loader.ptero()
+    ptero.init().then(() => {
+        ptero.add(scene)
+        ptero.position(30, 1)
+        list.add(ptero)
+    })
+}
+
+{
+    const skull = Loader.skull()
+    skull.init().then(() => {
+        skull.add(scene)
+    })
+    window.skull = skull
+}
 
 // ANIM
 const animate = function () {
     stats.begin()
 
     renderer.render(scene, camera)
+
+    list.for().forEach((e) => {
+        e[1].positionadd(-speed, 0, 0)
+        if (e[1].framePos.x < -20) {
+            e[1].remove(scene)
+            list.delete(e[0])
+        }
+    })
+
+    floorSpawn.minus(speed)
+    if (floorSpawn.checkif()) {
+        floorSpawn.add(Loader, list)
+    }
 
     stats.end()
     requestAnimationFrame(animate)

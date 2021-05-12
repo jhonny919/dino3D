@@ -7,8 +7,8 @@ class Dino {
         this.frames = []
         this.framesb = []
 
-        this.animTime = 150
-        this.animTimeMin = 80
+        this.animTime = 80
+        this.animTimeMin = 50
 
         this.frame = 1
         this.isb = false
@@ -168,7 +168,7 @@ class Dino {
                 this.frame++
             }
             if (this.active === true) this.animation()
-            if (this.animTime > this.animTimeMin) this.animTime -= 0.3
+            if (this.animTime > this.animTimeMin) this.animTime -= 0.1
         }, this.animTime)
     }
 

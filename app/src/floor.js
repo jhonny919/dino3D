@@ -1,12 +1,15 @@
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader.js"
 
+// length = 9
+// width = 4.25
+
 class Floor {
     constructor() {
         // object animation + state
         this.frame = 0
 
-        this.framePos = { z: 0, x: 0, y: -1.26 }
+        this.framePos = { z: 0.125, x: 0.25, y: -1.75 }
     }
 
     init() {
@@ -23,7 +26,7 @@ class Floor {
                 objLoader.load(`${dir}.obj`, (mesh) => {
                     this.frame = mesh
                     if (this.frame !== 0) {
-                        this.frame.scale.multiplyScalar(1.8)
+                        this.frame.scale.multiplyScalar(2.5)
                         resolve()
                     }
                 })
@@ -44,7 +47,7 @@ class Floor {
     }
 
     position(x = 0, y = 0, z = 0) {
-        this.framePos = { z: 0, x: 0, y: -1.26 }
+        this.framePos = { z: 0.125, x: 0.25, y: -1.75 }
 
         this.framePos.x += x
         this.framePos.y += y

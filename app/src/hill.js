@@ -1,6 +1,9 @@
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader.js"
 
+// length = 9
+// width = 5
+
 class Hill {
     constructor() {
         // object animation + state
@@ -23,7 +26,7 @@ class Hill {
                 objLoader.load(`${dir}.obj`, (mesh) => {
                     this.frame = mesh
                     if (this.frame !== 0) {
-                        //scale
+                        this.frame.scale.multiplyScalar(2.5)
                         resolve()
                     }
                 })
@@ -33,8 +36,6 @@ class Hill {
 
     add(scene, x, y, z) {
         scene.add(this.frame)
-
-        this.rotation(0, Math.PI, 0)
 
         this.position(x, y, z)
     }

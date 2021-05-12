@@ -1,12 +1,15 @@
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader.js"
 
+// length = 10
+// width = 5.58
+
 class Subfloor {
     constructor() {
         // object animation + state
         this.frame = 0
 
-        this.framePos = { z: 0.1, x: -0.1, y: -0.2 }
+        this.framePos = { z: 0.1, x: 0, y: -1.2 }
     }
 
     init() {
@@ -23,7 +26,7 @@ class Subfloor {
                 objLoader.load(`${dir}.obj`, (mesh) => {
                     this.frame = mesh
                     if (this.frame !== 0) {
-                        //scale
+                        this.frame.scale.multiplyScalar(0.9)
                         resolve()
                     }
                 })
@@ -34,7 +37,7 @@ class Subfloor {
     add(scene, x, y, z) {
         scene.add(this.frame)
 
-        this.rotation(0, Math.PI, 0)
+        this.rotation(0, Math.PI / 2, 0)
 
         this.position(x, y, z)
     }
@@ -44,7 +47,7 @@ class Subfloor {
     }
 
     position(x = 0, y = 0, z = 0) {
-        this.framePos = { z: 0.1, x: -0.1, y: -0.2 }
+        this.framePos = { z: 0.1, x: 0, y: -1.2 }
 
         this.framePos.x += x
         this.framePos.y += y
