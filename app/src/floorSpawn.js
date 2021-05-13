@@ -1,5 +1,5 @@
 class FloorSpaw {
-    constructor(Loader, list) {
+    constructor(Loader, list, scene) {
         this.length = 81
 
         for (let i = -1; i < 10; i++) {

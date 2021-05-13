@@ -4,6 +4,7 @@ import * as THREE from "three"
 import { linkedList } from "./linkedList"
 import { Loader } from "./loader"
 import { FloorSpaw } from "./floorSpawn"
+import { DecSpawn } from "./decSpawn"
 
 // add scene
 const scene = new THREE.Scene()
@@ -23,7 +24,8 @@ renderer.setClearColor(0x42e3f5, 1)
 
 //vars
 const list = new linkedList()
-const floorSpawn = new FloorSpaw(Loader, list)
+const floorSpawn = new FloorSpaw(Loader, list, scene)
+const decSpawn = new DecSpawn(Loader, list, scene)
 
 let speed = 0.1
 
@@ -102,6 +104,12 @@ camera.position.z = 5
     window.water = water
 }
 
+const seaweed = Loader.seaweed()
+seaweed.init().then(() => {
+    seaweed.add(scene)
+})
+window.seaweed = seaweed
+
 {
     const ptero = Loader.ptero()
     ptero.init().then(() => {
@@ -109,14 +117,6 @@ camera.position.z = 5
         ptero.position(30, 1)
         list.add(ptero)
     })
-}
-
-{
-    const skull = Loader.skull()
-    skull.init().then(() => {
-        skull.add(scene)
-    })
-    window.skull = skull
 }
 
 // ANIM
