@@ -7,11 +7,6 @@ class DecSpawn {
         this.bg3 = ["1flower_pink", "1flower_yellow", "2flower_pink", "2x2rock", "2x3rock", "3x3rock", "3x4rock", "dinoskull", "scorpion", "seaweed"]
 
         this.bg4 = ["1flower_pink", "1flower_yellow", "2flower_pink", "2x2rock", "2x3rock", "3x3rock", "3x4rock"]
-
-        this.spawnbg1(Loader, list, scene)
-        this.spawnbg2(Loader, list, scene)
-        this.spawnbg3(Loader, list, scene)
-        this.spawnbg4(Loader, list, scene)
         ;(() => {
             let name
             for (let i = 0; i < 73; i += 14) {
@@ -212,11 +207,19 @@ class DecSpawn {
             }
         })()
     }
+
+    add(Loader, list, scene) {
+        this.spawnbg1(Loader, list, scene)
+        this.spawnbg2(Loader, list, scene)
+        this.spawnbg3(Loader, list, scene)
+        this.spawnbg4(Loader, list, scene)
+    }
+
     random(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
     spawnbg1(Loader, list, scene) {
-        this.bg1i = setInterval(() => {
+        this.bg1i = setTimeout(() => {
             let name = this.bg1[Math.floor(Math.random() * this.bg1.length)]
             if (name === "skull") {
                 const skull = Loader.skull()
@@ -312,7 +315,7 @@ class DecSpawn {
         }, this.random(1500, 3000))
     }
     spawnbg2(Loader, list, scene) {
-        this.bg2i = setInterval(() => {
+        this.bg2i = setTimeout(() => {
             let name = this.bg2[Math.floor(Math.random() * this.bg2.length)]
             if (name === "1bigtree") {
                 const bigtree1 = Loader.bigtree1()
@@ -418,7 +421,7 @@ class DecSpawn {
         }, this.random(1500, 3000))
     }
     spawnbg3(Loader, list, scene) {
-        this.bg3i = setInterval(() => {
+        this.bg3i = setTimeout(() => {
             let name = this.bg3[Math.floor(Math.random() * this.bg3.length)]
             if (name === "1flower_pink") {
                 const flower_pink1 = Loader.flower_pink1()
@@ -523,7 +526,7 @@ class DecSpawn {
         }, this.random(1000, 2000))
     }
     spawnbg4(Loader, list, scene) {
-        this.bg4i = setInterval(() => {
+        this.bg4i = setTimeout(() => {
             let name = this.bg4[Math.floor(Math.random() * this.bg4.length)]
             if (name === "1flower_pink") {
                 const flower_pink1 = Loader.flower_pink1()

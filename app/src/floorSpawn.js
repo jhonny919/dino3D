@@ -28,14 +28,14 @@ class FloorSpaw {
                     subfloor.position(i * 9, 0, 9.58)
                 })
             }
-            // {
-            //     const subfloor = Loader.subfloor()
-            //     subfloor.init().then(() => {
-            //         subfloor.add(scene)
-            //         list.add(subfloor)
-            //         subfloor.position(i * 9, 0, 13)
-            //     })
-            // }
+            {
+                const subfloor = Loader.subfloor()
+                subfloor.init().then(() => {
+                    subfloor.add(scene)
+                    list.add(subfloor)
+                    subfloor.position(i * 9, 0, 15)
+                })
+            }
             {
                 const hill = Loader.hill()
                 hill.init().then(() => {
@@ -91,6 +91,14 @@ class FloorSpaw {
                 subfloor.add(scene)
                 list.add(subfloor)
                 subfloor.position(this.length, 0, 9.58)
+            })
+        }
+        {
+            const subfloor = Loader.subfloor()
+            subfloor.init().then(() => {
+                subfloor.add(scene)
+                list.add(subfloor)
+                subfloor.position(this.length, 0, 15)
             })
         }
         {

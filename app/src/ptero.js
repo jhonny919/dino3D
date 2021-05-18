@@ -1,8 +1,9 @@
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader.js"
+import * as THREE from "three"
 
 class Ptero {
-    constructor() {
+    constructor(scene) {
         // object animation + state
         this.frames = []
 
@@ -23,6 +24,21 @@ class Ptero {
         ]
 
         this.framePos = { z: 0.25, y: 0, x: 0 }
+
+        this.hity = 0.8
+        this.hitx = 1
+        this.hitz = 1
+
+        const geometry = new THREE.BoxGeometry(1, 0.8, 1)
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+        const cube = new THREE.Mesh(geometry, material)
+        cube.position.y = -200
+        cube.position.x = -200
+        cube.visible = false
+
+        scene.add(cube)
+
+        this.hitbox = cube
     }
     init() {
         // load models + sorting by frames
@@ -77,6 +93,7 @@ class Ptero {
         this.active = false
 
         this.frames.forEach((e) => scene.remove(e))
+        scene.remove(this.hitbox)
     }
 
     animation() {
@@ -120,6 +137,10 @@ class Ptero {
         }
 
         this.framePos = { x, y, z }
+
+        this.hitbox.position.z = this.framePos.z
+        this.hitbox.position.x = this.framePos.x
+        this.hitbox.position.y = this.framePos.y + 0.4
     }
 
     positionadd(x = 0, y = 0, z = 0) {
@@ -137,6 +158,10 @@ class Ptero {
         this.framePos.x += x
         this.framePos.y += y
         this.framePos.z += z
+
+        this.hitbox.position.z = this.framePos.z
+        this.hitbox.position.x = this.framePos.x
+        this.hitbox.position.y = this.framePos.y + 0.4
     }
 
     rotation(x = 0, y = 0, z = 0) {

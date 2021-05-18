@@ -1,8 +1,8 @@
 import { Dino } from "./dino"
-import { Floor } from "./floor"
-import { Hill } from "./hill"
+import { Floor } from "./floor/floor"
+import { Hill } from "./floor/hill"
 import { Ptero } from "./ptero"
-import { Subfloor } from "./subfloor"
+import { Subfloor } from "./floor/subfloor"
 import { Bigcactus1 } from "./cactuses/1bigcactus"
 import { Bigcactus2 } from "./cactuses/2bigcactus"
 import { Mediumcactus2 } from "./cactuses/2mediumcactus"
@@ -23,33 +23,36 @@ import { Palm } from "./decorations/palm"
 import { Scorpion } from "./decorations/scorpion"
 import { Seaweed } from "./decorations/seaweed"
 import { Skull } from "./decorations/skull"
+import { scene } from "./index"
 
-const Loader = {
-    dino: () => new Dino(),
-    floor: () => new Floor(),
-    hill: () => new Hill(),
-    ptero: () => new Ptero(),
-    subfloor: () => new Subfloor(),
-    bigcactus1: () => new Bigcactus1(),
-    bigcactus2: () => new Bigcactus2(),
-    mediumcactus2: () => new Mediumcactus2(),
-    smallcactus2: () => new Smallcactus2(),
-    mediumcactus3: () => new Mediumcactus3(),
-    smallcactus3: () => new Smallcactus3(),
-    bigtree1: () => new Bigtree1(),
-    flower_pink1: () => new Flower_pink1(),
-    flower_yellow1: () => new Flower_yellow1(),
-    flower_pink2: () => new Flower_pink2(),
-    rock2x2: () => new Rock2x2(),
-    rock2x3: () => new Rock2x3(),
-    rock3x3: () => new Rock3x3(),
-    rock3x4: () => new Rock3x4(),
-    dinoskull: () => new Dinoskull(),
-    hintgold: () => new Hintgold(),
-    palm: () => new Palm(),
-    scorpion: () => new Scorpion(),
-    seaweed: () => new Seaweed(),
-    skull: () => new Skull(),
+class loader {
+    constructor(scene) {
+        this.dino = () => new Dino()
+        this.floor = () => new Floor()
+        this.hill = () => new Hill()
+        this.ptero = () => new Ptero(scene)
+        this.subfloor = () => new Subfloor()
+        this.bigcactus1 = () => new Bigcactus1(scene)
+        this.bigcactus2 = () => new Bigcactus2(scene)
+        this.mediumcactus2 = () => new Mediumcactus2(scene)
+        this.smallcactus2 = () => new Smallcactus2(scene)
+        this.mediumcactus3 = () => new Mediumcactus3(scene)
+        this.smallcactus3 = () => new Smallcactus3(scene)
+        this.bigtree1 = () => new Bigtree1()
+        this.flower_pink1 = () => new Flower_pink1()
+        this.flower_yellow1 = () => new Flower_yellow1()
+        this.flower_pink2 = () => new Flower_pink2()
+        this.rock2x2 = () => new Rock2x2()
+        this.rock2x3 = () => new Rock2x3()
+        this.rock3x3 = () => new Rock3x3()
+        this.rock3x4 = () => new Rock3x4()
+        this.dinoskull = () => new Dinoskull()
+        this.hintgold = () => new Hintgold()
+        this.palm = () => new Palm()
+        this.scorpion = () => new Scorpion()
+        this.seaweed = () => new Seaweed()
+        this.skull = () => new Skull()
+    }
 }
 
-export { Loader }
+export { loader }

@@ -1,12 +1,27 @@
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader.js"
+import * as THREE from "three"
 
 class Bigcactus1 {
-    constructor() {
+    constructor(scene) {
         // object animation + state
         this.frame = 0
 
         this.framePos = { z: -0.05, x: 0.05, y: 0 }
+
+        this.hity = 3.2
+        this.hitx = 1
+        this.hitz = 1
+
+        const geometry = new THREE.BoxGeometry(1, 3.2, 1)
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+        const cube = new THREE.Mesh(geometry, material)
+        cube.position.y = -200
+        cube.position.x = -200
+        cube.visible = false
+        scene.add(cube)
+
+        this.hitbox = cube
     }
 
     init() {
@@ -41,6 +56,7 @@ class Bigcactus1 {
 
     remove(scene) {
         scene.remove(this.frame)
+        scene.remove(this.hitbox)
     }
 
     position(x = 0, y = 0, z = 0) {
@@ -53,6 +69,10 @@ class Bigcactus1 {
         this.frame.position.z = this.framePos.z
         this.frame.position.x = this.framePos.x
         this.frame.position.y = this.framePos.y
+
+        this.hitbox.position.z = this.framePos.z
+        this.hitbox.position.x = this.framePos.x
+        this.hitbox.position.y = this.framePos.y + 1.1
     }
 
     positionadd(x = 0, y = 0, z = 0) {
@@ -63,6 +83,10 @@ class Bigcactus1 {
         this.frame.position.z = this.framePos.z
         this.frame.position.x = this.framePos.x
         this.frame.position.y = this.framePos.y
+
+        this.hitbox.position.z = this.framePos.z
+        this.hitbox.position.x = this.framePos.x
+        this.hitbox.position.y = this.framePos.y + 1.1
     }
 
     rotation(x = 0, y = 0, z = 0) {

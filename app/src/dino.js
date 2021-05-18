@@ -1,5 +1,6 @@
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader.js"
+import * as THREE from "three"
 
 class Dino {
     constructor() {
@@ -13,6 +14,34 @@ class Dino {
         this.frame = 1
         this.isb = false
         this.active = false
+
+        this.hity = 1
+        this.hitx = 1.2
+        this.hitz = 1.2
+
+        {
+            const geometry = new THREE.BoxGeometry(1.2, 1, 1.2)
+            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+            const cube = new THREE.Mesh(geometry, material)
+            scene.add(cube)
+            cube.visible = false
+
+            this.hitbox = cube
+        }
+
+        this.hitby = 1
+        this.hitbx = 1.6
+        this.hitbz = 1
+
+        {
+            const geometry = new THREE.BoxGeometry(1.6, 1, 1)
+            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+            const cube = new THREE.Mesh(geometry, material)
+            scene.add(cube)
+            cube.visible = false
+
+            this.hitboxb = cube
+        }
 
         this.framesPos = [
             { z: 0.15, y: -0.2, x: 0.1 },
@@ -131,6 +160,9 @@ class Dino {
                 this.frames[this.frame].visible = false
                 this.framesb[this.frame].visible = true
             }
+            if (e.code === "Space" || e.code === "KeyW" || e.code === "ArrowUp") {
+                if (this.active) this.jupm()
+            }
         })
 
         document.addEventListener("keyup", (e) => {
@@ -215,6 +247,14 @@ class Dino {
             this.framesb[i].position.y = this.framesbPos[i].y
             this.framesb[i].position.x = this.framesbPos[i].x
         }
+
+        this.hitbox.position.z = this.framesPos[1].z
+        this.hitbox.position.y = this.framesPos[1].y + 1.3
+        this.hitbox.position.x = this.framesPos[1].x
+
+        this.hitboxb.position.z = this.framesPos[1].z
+        this.hitboxb.position.y = this.framesPos[1].y + 1.3
+        this.hitboxb.position.x = this.framesPos[1].x
     }
 
     positionadd(x = 0, y = 0, z = 0) {
@@ -238,6 +278,14 @@ class Dino {
             this.framesb[i].position.x = this.framesbPos[i].x
             this.framesb[i].position.y = this.framesbPos[i].y
         }
+
+        this.hitbox.position.z = this.framesPos[1].z
+        this.hitbox.position.y = this.framesPos[1].y + 1.3
+        this.hitbox.position.x = this.framesPos[1].x
+
+        this.hitboxb.position.z = this.framesPos[1].z
+        this.hitboxb.position.y = this.framesPos[1].y + 1.3
+        this.hitboxb.position.x = this.framesPos[1].x
     }
 
     rotation(x = 0, y = 0, z = 0) {
@@ -253,7 +301,22 @@ class Dino {
         })
     }
 
-    jupm() {}
+    jupm() {
+        let power = 0.38
+        let time = 300
+        this.active = false
+
+        let interval = setInterval(() => {
+            if (power < -0.4) {
+                this.active = true
+                this.animation()
+                this.position(0, 0, 0)
+                clearInterval(interval)
+            }
+            if (!this.active) this.positionadd(0, power, 0)
+            power -= 0.015
+        }, 18)
+    }
 }
 
 export { Dino }
