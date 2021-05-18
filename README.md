@@ -25,3 +25,13 @@ npm run serve
 ```
 
 -   local server
+
+### Controls
+
+```
+W (space) 🠕  ---  jump
+```
+
+```
+S 🠗  ---  bend down
+```
