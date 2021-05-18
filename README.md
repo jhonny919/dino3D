@@ -1,6 +1,6 @@
 # dino 3D
 
-chrome 3D dino implementation attemt
+chrome 3D dino implementation attempt
 
 shitty code, pls dont look at it (made in ~5 days for college diploma)
 
